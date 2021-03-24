@@ -14,17 +14,21 @@ response=$(curl --location --request POST 'https://api.jibble.io/api/v1/function
 }')
 jobId=$( jq -r  '.result.jobId' <<< "${response}")
 
-sleep 2
-
-response=$(curl --location --request POST 'https://api.jibble.io/api/v1/functions/fetchReportResult' \
---header 'Content-Type: application/json' \
---data-raw '{
-  "jobId":"'$jobId'",
-  "_ApplicationId":"EdVXcwrUCkJu2T2mUfAgzemvSDDxYqDLECvx24Wk",
-  "_ClientVersion":"js2.7.1",
-  "_InstallationId":"0133685a-c9fc-8e0c-0787-5ea6ba00adfd",
-  "_SessionToken":'$1'
-}')
+done=false
+while [ "$done" != "true" ]
+do
+  sleep 1
+  response=$(curl --location --request POST 'https://api.jibble.io/api/v1/functions/fetchReportResult' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "jobId":"'$jobId'",
+    "_ApplicationId":"EdVXcwrUCkJu2T2mUfAgzemvSDDxYqDLECvx24Wk",
+    "_ClientVersion":"js2.7.1",
+    "_InstallationId":"0133685a-c9fc-8e0c-0787-5ea6ba00adfd",
+    "_SessionToken":'$1'
+  }')
+  done=$( jq -r  '.result.done' <<< "${response}")
+done
 totals=($( jq -r  '.result.data.totals' <<< "${response}"  | tr -d '[]," '))
 
 echo "$(date -d@${totals[0]} -u +%H:%M) $(date -d@${totals[1]} -u +%H:%M) $(date -d@${totals[2]} -u +%H:%M) $(date -d@${totals[3]} -u +%H:%M) $(date -d@${totals[4]} -u +%H:%M)"
