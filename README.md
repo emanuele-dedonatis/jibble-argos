@@ -1,5 +1,7 @@
 # ARGOS
-My [Argos](https://github.com/p-e-w/argos) configuration
+My [Argos](https://github.com/p-e-w/argos) configuration.
+
+Clone this repo in your argos folder (~/.config/argos/)
 
 ## Jibble
 Check jibble status and times, call jibble in and jibble out.
