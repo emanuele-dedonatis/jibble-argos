@@ -14,6 +14,8 @@ response=$(curl --location --request POST 'https://api.jibble.io/api/v1/function
 }')
 jobId=$( jq -r  '.result.jobId' <<< "${response}")
 
+sleep 2
+
 response=$(curl --location --request POST 'https://api.jibble.io/api/v1/functions/fetchReportResult' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -25,9 +27,4 @@ response=$(curl --location --request POST 'https://api.jibble.io/api/v1/function
 }')
 totals=($( jq -r  '.result.data.totals' <<< "${response}"  | tr -d '[]," '))
 
-$sum
-for i in "${totals[@]}"
-do
-	sum=$(($sum+$i))
-done
-echo $(date -d@$sum -u +%H:%M)
+echo "$(date -d@${totals[0]} -u +%H:%M) $(date -d@${totals[1]} -u +%H:%M) $(date -d@${totals[2]} -u +%H:%M) $(date -d@${totals[3]} -u +%H:%M) $(date -d@${totals[4]} -u +%H:%M)"
