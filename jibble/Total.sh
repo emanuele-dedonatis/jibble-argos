@@ -15,7 +15,8 @@ response=$(curl --location --request POST 'https://api.jibble.io/api/v1/function
 jobId=$( jq -r  '.result.jobId' <<< "${response}")
 
 done=false
-while [ "$done" != "true" ]
+i=0
+while [  "$done" != "true" -a "$i" -lt 5 ]
 do
   sleep 1
   response=$(curl --location --request POST 'https://api.jibble.io/api/v1/functions/fetchReportResult' \
@@ -28,6 +29,7 @@ do
     "_SessionToken":'$1'
   }')
   done=$( jq -r  '.result.done' <<< "${response}")
+  i=$((i+1))
 done
 totals=($( jq -r  '.result.data.totals' <<< "${response}"  | tr -d '[]," '))
 
