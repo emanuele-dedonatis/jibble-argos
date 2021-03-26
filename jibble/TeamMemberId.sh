@@ -8,11 +8,6 @@ response=$(curl --location --request POST 'https://api.jibble.io/api/v1/classes/
       "__type":"Pointer",
       "className":"Company",
       "objectId":"RPrDPR2o2uZQNMJP"
-    },
-    "user":{
-      "__type":"Pointer",
-      "className":"_User",
-      "objectId":"FBs7uD3oRFOqMYfo"
     }
   },
   "include":"position",
