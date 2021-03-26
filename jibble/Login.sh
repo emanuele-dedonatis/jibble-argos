@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
-response=$(curl --location --request POST 'https://api.jibble.io/api/v1/functions/logInUser' \
+response=$(curl --silent --request POST 'https://api.jibble.io/api/v1/functions/logInUser' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-  "username":"'$1'",
-  "password":"'$2'",
   "_ApplicationId":"EdVXcwrUCkJu2T2mUfAgzemvSDDxYqDLECvx24Wk",
-  "_ClientVersion":"js2.7.1",
-  "_InstallationId":"0133685a-c9fc-8e0c-0787-5ea6ba00adfd"
+  "username":"'$1'",
+  "password":"'$2'"
 }')
 
-echo $response | jq '.result.sessionToken'
+session_token=$(echo $response | jq '.result.sessionToken')
+user_id=$(echo $response | jq '.result.objectId')
+
+data=($session_token $user_id)
+
+echo ${data[@]}
+
