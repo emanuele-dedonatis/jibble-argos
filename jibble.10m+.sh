@@ -15,14 +15,28 @@ team_member_id=${person_data[1]}
 
 total=$(~/.config/argos/jibble/Total.sh $session_token $team_member_id)
 
+ubuntu_codename=$(lsb_release -c|awk '{print $2}')
+
 if [ $last_action -eq 1 ]; then
-	echo "$total|iconName=user-available"
+	if [ $ubuntu_codename == 'focal' ]; then
+		echo "$total|iconName=emblem-default"
+	else
+		echo "$total|iconName=user-available"
+	fi
 	# echo "---"
 	# echo "jibble OUT | bash='~/.config/argos/jibble/JibbleOut.sh "$session_token"' terminal=false"
 elif [ $last_action -eq 2 ]; then
-	echo "$total|iconName=media-record"
+	if [ $ubuntu_codename == 'focal' ]; then
+		echo "$total|iconName=emblem-unreadable"
+	else
+		echo "$total|iconName=media-record"
+	fi
 	# echo "---"
 	# echo "jibble IN | bash='~/.config/argos/jibble/JibbleIn.sh "$session_token"' terminal=false"
 else
-	echo "|iconName=user-idle"
+	if [ $ubuntu_codename == 'focal' ]; then
+		echo "$total|iconName=software-update-urgent"
+	else
+		echo "|iconName=user-idle"
+	fi
 fi
