@@ -3,7 +3,7 @@
 response=$(curl --silent --request POST 'https://api.jibble.io/api/v1/functions/startTeamMemberReport' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-  "from": "'$(date -dlast-monday +%Y-%m-%d)'",
+  "from": "'$(date -dmonday +%Y-%m-%d)'",
   "teamMemberId":'$2',
   "to": "'$(date -dnext-sunday +%Y-%m-%d)'",
   "tz": "Europe/Madrid",
