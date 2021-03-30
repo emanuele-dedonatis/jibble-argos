@@ -3,7 +3,7 @@
 response=$(curl --silent --request POST 'https://api.jibble.io/api/v1/functions/startTeamMemberReport' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-  "from": "'$(date -dmonday +%Y-%m-%d)'",
+  "from": "'$(date -d"next monday - 7 days" +%Y-%m-%d)'",
   "teamMemberId":'$2',
   "to": "'$(date -dnext-sunday +%Y-%m-%d)'",
   "tz": "Europe/Madrid",
@@ -12,9 +12,9 @@ response=$(curl --silent --request POST 'https://api.jibble.io/api/v1/functions/
 }')
 jobId=$( jq -r  '.result.jobId' <<< "${response}")
 
-done=false
+is_done=false
 i=0
-while [  "$done" != "true" -a "$i" -lt 5 ]
+while [  "$is_done" != "true" -a "$i" -lt 5 ]
 do
   sleep 1
   response=$(curl --silent --request POST 'https://api.jibble.io/api/v1/functions/fetchReportResult' \
@@ -24,7 +24,7 @@ do
     "_ApplicationId":"EdVXcwrUCkJu2T2mUfAgzemvSDDxYqDLECvx24Wk",
     "_SessionToken":'$1'
   }')
-  done=$( jq -r  '.result.done' <<< "${response}")
+  is_done=$( jq -r  '.result.done' <<< "${response}")
   i=$((i+1))
 done
 totals=($( jq -r  '.result.data.totals' <<< "${response}"  | tr -d '[]," '))
