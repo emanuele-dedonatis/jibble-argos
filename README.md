@@ -1,5 +1,5 @@
 # ARGOS JIBBLE
-[Jibble](https://www.jibble.io/) extension for [Argos](https://github.com/p-e-w/argos): check jibble status and times, call jibble in and jibble out.
+[Jibble](https://www.jibble.io/) extension for [Argos](https://github.com/p-e-w/argos): check jibble status and times.
 
 ![image](https://user-images.githubusercontent.com/6308233/112284286-5df9eb00-8c89-11eb-806f-8fb167123ac2.png)
 
